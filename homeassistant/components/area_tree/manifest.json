@@ -1,0 +1,10 @@
+{
+  "domain": "area_tree",
+  "name": "area_tree",
+  "codeowners": ["@thargy"],
+  "config_flow": true,
+  "documentation": "https://www.home-assistant.io/integrations/area_tree",
+  "integration_type": "helper",
+  "iot_class": "calculated",
+  "requirements": []
+}

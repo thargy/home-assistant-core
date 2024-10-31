@@ -43,6 +43,16 @@
       ],
     },
     {
+      "name": "Home Assistant: Changed tests (no timeout)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "justMyCode": false,
+      "args": [
+        "--picked"
+      ],
+    },
+    {
       // Debug by attaching to local Home Assistant server using Remote Python Debugger.
       // See https://www.home-assistant.io/integrations/debugpy/
       "name": "Home Assistant: Attach Local",

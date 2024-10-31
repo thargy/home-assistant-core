@@ -7271,6 +7271,11 @@
     }
   },
   "helper": {
+    "area_tree": {
+      "integration_type": "helper",
+      "config_flow": true,
+      "iot_class": "calculated"
+    },
     "bayesian": {
       "name": "Bayesian",
       "integration_type": "helper",
@@ -7413,6 +7418,7 @@
   },
   "translated_name": [
     "alert",
+    "area_tree",
     "aurora",
     "cert_expiry",
     "counter",

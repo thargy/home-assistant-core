@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Coroutine, Mapping
-import logging
 from typing import Any, cast
 
 import voluptuous as vol
@@ -19,17 +18,16 @@ from homeassistant.helpers.schema_config_entry_flow import (
     entity_selector_without_own_entities,
 )
 
+from . import _LOGGER
 from .const import (
     CONF_AREA_ID,
+    CONF_CHILDREN,
     CONF_FLOOR_ID,
     CONF_ICON,
     CONF_NAME,
-    CONF_PARENT,
     CONF_TREE_TYPE,
     DOMAIN,
 )
-
-_LOGGER = logging.getLogger(DOMAIN)
 
 AREA_TREE_TYPES = [
     "independent",
@@ -42,20 +40,24 @@ async def options_schema(
     handler: SchemaCommonFlowHandler | None,
 ) -> vol.Schema:
     """Generate options schema."""
-    entity_selector: selector.Selector[Any] | vol.Schema
-    if handler is None:
-        entity_selector = selector.selector(
-            {"entity": {"domain": "sensor", "multiple": False, "integration": DOMAIN}}
-        )
-    else:
+    entity_selector: selector.Selector[Any]
+
+    if handler is not None and isinstance(
+        handler.parent_handler, SchemaOptionsFlowHandler
+    ):
+        optionsFlowHandler: SchemaOptionsFlowHandler = handler.parent_handler
         entity_selector = entity_selector_without_own_entities(
-            cast(SchemaOptionsFlowHandler, handler.parent_handler),
+            optionsFlowHandler,
             selector.EntitySelectorConfig(
-                domain="sensor", multiple=False, integration=DOMAIN
+                domain="sensor", multiple=True, integration=DOMAIN
             ),
         )
+    else:
+        entity_selector = selector.selector(
+            {"entity": {"domain": "sensor", "multiple": True, "integration": DOMAIN}}
+        )
 
-    return vol.Schema({vol.Optional(CONF_PARENT): entity_selector})
+    return vol.Schema({vol.Optional(CONF_CHILDREN): entity_selector})
 
 
 INDEPENDENT_CONFIG_SCHEMA = vol.Schema(

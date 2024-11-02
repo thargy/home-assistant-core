@@ -5,7 +5,7 @@ To update, run python3 -m script.hassfest
 
 FLOWS = {
     "helper": [
-        "area_tree",
+        "area_network",
         "derivative",
         "generic_hygrostat",
         "generic_thermostat",

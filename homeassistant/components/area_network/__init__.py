@@ -1,4 +1,4 @@
-"""The area_tree integration."""
+"""The area_network integration."""
 # pylint: disable=fixme
 
 from __future__ import annotations
@@ -9,13 +9,11 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 
-from .const import DOMAIN
-
-_LOGGER = logging.getLogger(DOMAIN)
+_LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Set up area_tree from a config entry."""
+    """Set up area_network from a config entry."""
     # TODO Optionally store an object for your platforms to access
     # entry.runtime_data = ...
 

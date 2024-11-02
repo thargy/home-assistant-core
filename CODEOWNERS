@@ -137,8 +137,8 @@ build.json @home-assistant/supervisor
 /tests/components/aranet/ @aschmitz @thecode @anrijs
 /homeassistant/components/arcam_fmj/ @elupus
 /tests/components/arcam_fmj/ @elupus
-/homeassistant/components/area_tree/ @thargy
-/tests/components/area_tree/ @thargy
+/homeassistant/components/area_network/ @thargy
+/tests/components/area_network/ @thargy
 /homeassistant/components/arris_tg2492lg/ @vanbalken
 /homeassistant/components/arve/ @ikalnyi
 /tests/components/arve/ @ikalnyi

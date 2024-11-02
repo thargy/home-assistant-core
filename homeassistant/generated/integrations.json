@@ -7271,7 +7271,7 @@
     }
   },
   "helper": {
-    "area_tree": {
+    "area_network": {
       "integration_type": "helper",
       "config_flow": true,
       "iot_class": "calculated"
@@ -7418,7 +7418,7 @@
   },
   "translated_name": [
     "alert",
-    "area_tree",
+    "area_network",
     "aurora",
     "cert_expiry",
     "counter",

@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Iterable
+import logging
 from typing import Any
 
 from homeassistant.core import (
@@ -31,7 +32,7 @@ from homeassistant.helpers.floor_registry import (
 )
 from homeassistant.util.hass_dict import HassKey
 
-from . import _LOGGER
+_LOGGER = logging.getLogger(__name__)
 
 _TRACK_AREA_REGISTRY_UPDATED_DATA: HassKey[
     _KeyedEventData[EventAreaRegistryUpdatedData]

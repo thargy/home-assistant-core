@@ -1,9 +1,9 @@
 {
-  "domain": "area_tree",
-  "name": "area_tree",
+  "domain": "area_network",
+  "name": "area_network",
   "codeowners": ["@thargy"],
   "config_flow": true,
-  "documentation": "https://www.home-assistant.io/integrations/area_tree",
+  "documentation": "https://www.home-assistant.io/integrations/area_network",
   "integration_type": "helper",
   "iot_class": "calculated",
   "requirements": []

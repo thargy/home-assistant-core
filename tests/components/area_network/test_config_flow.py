@@ -1,4 +1,4 @@
-"""Test the area_tree config flow."""
+"""Test the area_network config flow."""
 # pylint: disable=fixme
 
 from unittest.mock import AsyncMock
@@ -6,7 +6,7 @@ from unittest.mock import AsyncMock
 import pytest
 
 from homeassistant import config_entries
-from homeassistant.components.area_tree.const import DOMAIN
+from homeassistant.components.area_network.const import DOMAIN
 from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResultType
 
@@ -30,16 +30,16 @@ async def test_config_flow(
 
     result = await hass.config_entries.flow.async_configure(
         result["flow_id"],
-        {"name": "My area_tree", "entity_id": input_sensor_entity_id},
+        {"name": "My area_network", "entity_id": input_sensor_entity_id},
     )
     await hass.async_block_till_done()
 
     assert result["type"] == FlowResultType.CREATE_ENTRY
-    assert result["title"] == "My area_tree"
+    assert result["title"] == "My area_network"
     assert result["data"] == {}
     assert result["options"] == {
         "entity_id": input_sensor_entity_id,
-        "name": "My area_tree",
+        "name": "My area_network",
     }
     assert len(mock_setup_entry.mock_calls) == 1
 
@@ -47,9 +47,9 @@ async def test_config_flow(
     assert config_entry.data == {}
     assert config_entry.options == {
         "entity_id": input_sensor_entity_id,
-        "name": "My area_tree",
+        "name": "My area_network",
     }
-    assert config_entry.title == "My area_tree"
+    assert config_entry.title == "My area_network"
 
 
 def get_suggested(schema, key):
@@ -75,9 +75,9 @@ async def test_options(hass: HomeAssistant, platform) -> None:
         domain=DOMAIN,
         options={
             "entity_id": input_sensor_1_entity_id,
-            "name": "My area_tree",
+            "name": "My area_network",
         },
-        title="My area_tree",
+        title="My area_network",
     )
     config_entry.add_to_hass(hass)
     assert await hass.config_entries.async_setup(config_entry.entry_id)
@@ -98,14 +98,14 @@ async def test_options(hass: HomeAssistant, platform) -> None:
     assert result["type"] == FlowResultType.CREATE_ENTRY
     assert result["data"] == {
         "entity_id": input_sensor_2_entity_id,
-        "name": "My area_tree",
+        "name": "My area_network",
     }
     assert config_entry.data == {}
     assert config_entry.options == {
         "entity_id": input_sensor_2_entity_id,
-        "name": "My area_tree",
+        "name": "My area_network",
     }
-    assert config_entry.title == "My area_tree"
+    assert config_entry.title == "My area_network"
 
     # Check config entry is reloaded with new options
     await hass.async_block_till_done()
@@ -114,5 +114,5 @@ async def test_options(hass: HomeAssistant, platform) -> None:
     assert len(hass.states.async_all()) == 1
 
     # TODO Check the state of the entity has changed as expected
-    state = hass.states.get(f"{platform}.my_area_tree")
+    state = hass.states.get(f"{platform}.my_area_network")
     assert state.attributes == {}

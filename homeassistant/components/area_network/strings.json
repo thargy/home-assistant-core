@@ -1,0 +1,50 @@
+{
+  "title": "Area Network",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Add Area Network - Select Type",
+        "description": "Area Network allows areas and floors to be extended to a full hierarchy. You can start with an existing area or floor.",
+        "menu_options": {
+          "independent": "Independent Network Node",
+          "area": "Network Node associated with an existing Area",
+          "floor": "Network Node associated with an existing Floor"
+        }
+      },
+      "area": {
+        "title": "Add Area Network - Select Area",
+        "description": "Select an area to associate with the network.",
+        "data": {
+          "area_id": "Area"
+        }
+      },
+      "floor": {
+        "title": "Add Area Network - Select Floor",
+        "description": "Select a floor to associate with the network.",
+        "data": {
+          "area_id": "Floor"
+        }
+      },
+      "independent": {
+        "title": "Add Area Network - Options",
+        "description": "Select options for area network.",
+        "data": {
+          "name": "Name",
+          "icon": "Icon",
+          "parent": "Parent Network Node"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Add Area Network - Options",
+        "description": "Select options for area network.",
+        "data": {
+          "parent": "Parent Network Node"
+        }
+      }
+    }
+  }
+}

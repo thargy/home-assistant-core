@@ -1,12 +1,14 @@
-"""Config flow for area_tree integration."""
+"""Config flow for area_network integration."""
 
 from __future__ import annotations
 
 from collections.abc import Callable, Coroutine, Mapping
+import logging
 from typing import Any, cast
 
 import voluptuous as vol
 
+from homeassistant.const import CONF_ICON, CONF_NAME
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers import selector
 from homeassistant.helpers.schema_config_entry_flow import (
@@ -18,22 +20,15 @@ from homeassistant.helpers.schema_config_entry_flow import (
     entity_selector_without_own_entities,
 )
 
-from . import _LOGGER
-from .const import (
-    CONF_AREA_ID,
-    CONF_CHILDREN,
-    CONF_FLOOR_ID,
-    CONF_ICON,
-    CONF_NAME,
-    CONF_TREE_TYPE,
-    DOMAIN,
-)
+from .const import CONF_AREA, CONF_CHILDREN, CONF_FLOOR, CONF_NETWORK_TYPE, DOMAIN
 
-AREA_TREE_TYPES = [
+AREA_NETWORK_TYPES = [
     "independent",
     "area",
     "floor",
 ]
+
+_LOGGER = logging.getLogger(__name__)
 
 
 async def options_schema(
@@ -64,78 +59,49 @@ INDEPENDENT_CONFIG_SCHEMA = vol.Schema(
     {
         vol.Required(CONF_NAME): selector.TextSelector(),
         vol.Optional(
-            CONF_ICON, default="mdi:pine-tree-variant-outline"
+            CONF_ICON, default="mdi:pine-network-variant-outline"
         ): selector.IconSelector(),
     }
 )
 
 AREA_CONFIG_SCHEMA = vol.Schema(
     {
-        vol.Optional(CONF_AREA_ID): selector.AreaSelector(),
+        vol.Optional(CONF_AREA): selector.AreaSelector(),
     }
 )
 
 FLOOR_CONFIG_SCHEMA = vol.Schema(
     {
-        vol.Optional(CONF_FLOOR_ID): selector.FloorSelector(),
+        vol.Optional(CONF_FLOOR): selector.FloorSelector(),
     }
 )
 
 
-# async def _suggested_values(handler: SchemaCommonFlowHandler) -> dict[str, Any]:
-#     """Suggest values based on area/floor."""
-#     tree_type = handler.options.get(CONF_TREE_TYPE)
-#     suggestions = {}
-#     if tree_type == "area":
-#         area_id = handler.options.get(CONF_AREA_ID)
-#         if area_id is not None:
-#             area_reg = ar.async_get(handler.parent_handler.hass)
-#             area = area_reg.async_get_area(area_id)
-#             if area is not None:
-#                 if not handler.options.get(CONF_NAME):
-#                     suggestions = {CONF_NAME: area.name, **suggestions}
-#                 if not handler.options.get(CONF_ICON):
-#                     suggestions = {CONF_ICON: area.icon, **suggestions}
-#
-#     elif tree_type == "floor":
-#         floor_id = handler.options.get(CONF_FLOOR_ID)
-#         if floor_id is not None:
-#             floor_reg = fr.async_get(handler.parent_handler.hass)
-#             floor = floor_reg.async_get_floor(floor_id)
-#             if floor is not None:
-#                 if not handler.options.get(CONF_NAME):
-#                     suggestions = {CONF_NAME: floor.name, **suggestions}
-#                 if not handler.options.get(CONF_ICON):
-#                     suggestions = {CONF_ICON: floor.icon, **suggestions}
-#
-#     return suggestions
-
-
 async def _choose_options_step(options: dict[str, Any]) -> str:
-    """Return next step_id for options flow according to tree_type."""
-    return cast(str, options[CONF_TREE_TYPE])
+    """Return next step_id for options flow according to network_type."""
+    return cast(str, options[CONF_NETWORK_TYPE])
 
 
 def _validate_user_input(
-    tree_type: str,
+    network_type: str,
 ) -> Callable[
     [SchemaCommonFlowHandler, dict[str, Any]], Coroutine[Any, Any, dict[str, Any]]
 ]:
-    """Set group type."""
+    """Set network type."""
 
-    async def _set_tree_type(
+    async def _set_network_type(
         handler: SchemaCommonFlowHandler, user_input: dict[str, Any]
     ) -> dict[str, Any]:
-        """Set tree type if missing."""
-        if CONF_TREE_TYPE not in user_input:
-            user_input[CONF_TREE_TYPE] = tree_type
+        """Set network type if missing."""
+        if CONF_NETWORK_TYPE not in user_input:
+            user_input[CONF_NETWORK_TYPE] = network_type
         return user_input
 
-    return _set_tree_type
+    return _set_network_type
 
 
 CONFIG_FLOW = {
-    "user": SchemaFlowMenuStep(AREA_TREE_TYPES),
+    "user": SchemaFlowMenuStep(AREA_NETWORK_TYPES),
     "area": SchemaFlowFormStep(
         AREA_CONFIG_SCHEMA,
         validate_user_input=_validate_user_input("area"),
@@ -160,8 +126,8 @@ OPTIONS_FLOW = {
 }
 
 
-class AreaTreeConfigFlowHandler(SchemaConfigFlowHandler, domain=DOMAIN):
-    """Handle a config or options flow for area tree."""
+class AreaNetworkConfigFlowHandler(SchemaConfigFlowHandler, domain=DOMAIN):
+    """Handle a config or options flow for area network."""
 
     config_flow = CONFIG_FLOW
     options_flow = OPTIONS_FLOW
